@@ -50,11 +50,13 @@ _PARSER.add_argument(
     action='store_true',
 )
 _PARSER.add_argument(
-    '--disable_host_checking',
-    help='optional; if specified, disables host checking so that the dev '
-    'server can be accessed by any device on the same network using the '
-    'host device\'s IP address. DO NOT use this flag if you\'re running '
-    'on an untrusted network.',
+    '--enable_host_checking',
+    help='optional; if specified, enables host checking on the dev server. '
+    'Host checking protects against DNS rebinding attacks but may prevent '
+    'cron jobs from running when triggered via localhost. By default, host '
+    'checking is disabled to allow cron jobs to work correctly from both '
+    'localhost and 0.0.0.0. Only enable this if you understand the '
+    'implications.',
     action='store_true',
 )
 _PARSER.add_argument(
@@ -196,7 +198,7 @@ def start_services(
     dev_appserver = stack.enter_context(
         servers.managed_dev_appserver(
             app_yaml_path,
-            enable_host_checking=not parsed_args.disable_host_checking,
+            enable_host_checking=parsed_args.enable_host_checking,
             automatic_restart=not parsed_args.no_auto_restart,
             skip_sdk_update_check=True,
             port=feconf.GAE_DEVELOPMENT_SERVER_PORT,
