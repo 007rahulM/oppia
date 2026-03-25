@@ -423,7 +423,25 @@ class MainTests(unittest.TestCase):
         self.mock_dev_appserver.assert_called_once_with(
             'app_dev.yaml',
             enable_host_checking=False,
+            host='0.0.0.0',
             automatic_restart=False,
+            skip_sdk_update_check=True,
+            port=8181,
+            env=mock.ANY,
+        )
+
+    def test_main_uses_localhost_as_host_by_default(self) -> None:
+        start.main(
+            [
+                '--no_browser',
+                '--skip_install',
+            ]
+        )
+        self.mock_dev_appserver.assert_called_once_with(
+            'app_dev.yaml',
+            enable_host_checking=True,
+            host='127.0.0.1',
+            automatic_restart=True,
             skip_sdk_update_check=True,
             port=8181,
             env=mock.ANY,

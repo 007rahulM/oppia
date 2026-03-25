@@ -197,6 +197,7 @@ def start_services(
         servers.managed_dev_appserver(
             app_yaml_path,
             enable_host_checking=not parsed_args.disable_host_checking,
+            host='0.0.0.0' if parsed_args.disable_host_checking else '127.0.0.1',
             automatic_restart=not parsed_args.no_auto_restart,
             skip_sdk_update_check=True,
             port=feconf.GAE_DEVELOPMENT_SERVER_PORT,

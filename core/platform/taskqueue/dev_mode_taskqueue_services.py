@@ -59,7 +59,7 @@ def _task_handler(
     # handlers in DEV_MODE.
     headers['X-AppEngine-Fake-Is-Admin'] = '1'
     headers['method'] = 'POST'
-    complete_url = 'http://localhost:%s%s' % (GOOGLE_APP_ENGINE_PORT, url)
+    complete_url = 'http://127.0.0.1:%s%s' % (GOOGLE_APP_ENGINE_PORT, url)
     requests.post(
         complete_url,
         json=payload,

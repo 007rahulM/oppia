@@ -112,7 +112,7 @@ class DevModeTaskqueueServicesUnitTests(test_utils.TestBase):
             timeout: int,
         ) -> None:
             self.assertEqual(
-                url, 'http://localhost:%s%s' % (correct_port, dummy_url)
+                url, 'http://127.0.0.1:%s%s' % (correct_port, dummy_url)
             )
             self.assertEqual(json, correct_payload)
             self.assertEqual(headers, correct_headers)
