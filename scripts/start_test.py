@@ -414,7 +414,24 @@ class MainTests(unittest.TestCase):
     def test_main_correctly_passes_flags_to_dev_appserver(self) -> None:
         start.main(
             [
-                '--disable_host_checking',
+                '--enable_host_checking',
+                '--no_auto_restart',
+                '--no_browser',
+                '--skip_install',
+            ]
+        )
+        self.mock_dev_appserver.assert_called_once_with(
+            'app_dev.yaml',
+            enable_host_checking=True,
+            automatic_restart=False,
+            skip_sdk_update_check=True,
+            port=8181,
+            env=mock.ANY,
+        )
+
+    def test_main_disables_host_checking_by_default(self) -> None:
+        start.main(
+            [
                 '--no_auto_restart',
                 '--no_browser',
                 '--skip_install',
